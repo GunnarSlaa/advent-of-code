@@ -1,5 +1,4 @@
 use std::fs;
-use std::convert::TryInto;
 
 fn main() {
     let data = fs::read_to_string("input_test").expect("Can't read file");
@@ -9,15 +8,32 @@ fn main() {
     let line_size = lines_vec[0].len();
 
     for column in 0..line_size {
-        let mut count = 0;
-        for line in lines_vec.clone().iter() {
-            if &line[column..column + 1] == "1" {count += 1}
-        }
-        let looking_for = if count > lines_count / 2 {"1"} else {"0"};
-        lines_vec = lines_vec.iter().map(|x| if &x[column..column + 1] == looking_for {x}).collect()
+        let count = lines_vec.clone().into_iter()
+            .filter(|x|{&x[column..column + 1] == "1"})
+            .collect::<Vec<&str>>()
+            .len();
+        let looking_for = if count * 2 >= lines_count {"1"} else {"0"};
+        lines_vec = lines_vec.into_iter().filter(|x|{&x[column..column + 1] == looking_for}).collect();
+        lines_count = lines_vec.len();
+        if lines_count == 1 {break;}
     }
+    let oxygen_rating = usize::from_str_radix(&lines_vec[0], 2).unwrap();
 
-    // println!("Gamma: {}", gamma);
-    // println!("Epsilon: {}", epsilon);
-    // println!("Answer: {}", epsilon * gamma);
+    lines_vec = lines.clone().collect();
+    lines_count = lines_vec.len();
+    for column in 0..line_size {
+        let count = lines_vec.clone().into_iter()
+            .filter(|x|{&x[column..column + 1] == "1"})
+            .collect::<Vec<&str>>()
+            .len();
+        let looking_for = if count * 2 < lines_count {"1"} else {"0"};
+        lines_vec = lines_vec.into_iter().filter(|x|{&x[column..column + 1] == looking_for}).collect();
+        lines_count = lines_vec.len();
+        if lines_count == 1 {break;}
+    }
+    let co2_scrubber = usize::from_str_radix(&lines_vec[0], 2).unwrap();
+
+    println!("Oxygen rating: {}", oxygen_rating);
+    println!("CO2 scrubber rating: {}", co2_scrubber);
+    println!("Answer: {}", oxygen_rating * co2_scrubber);
 }
