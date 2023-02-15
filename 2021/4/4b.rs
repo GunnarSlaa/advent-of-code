@@ -41,6 +41,7 @@ impl BingoCard{
 fn main() {
     let data = fs::read_to_string("input").expect("Can't read file");
     let blocks = data.split("\r\n\r\n");
+    let blocks_count = blocks.clone().collect::<Vec<&str>>().len() - 1;
     let numbers: Vec<i32> = blocks.clone()
         .collect::<Vec<&str>>()[0]
         .split(",")
@@ -61,15 +62,22 @@ fn main() {
         })
     }
 
+    let mut count_solved: usize = 0;
+
     'outer: for number in numbers {
         for bingo_card in bingo_cards.iter_mut() {
             bingo_card.hit(number);
             if bingo_card.won(){
-                println!("Score: {}", bingo_card.score());
-                println!("Number: {}", number);
-                println!("Answer: {}", number * bingo_card.score());
-                break 'outer;
+                count_solved += 1;
+                if count_solved == blocks_count {
+                    println!("Score: {}", bingo_card.score());
+                    println!("Number: {}", number);
+                    println!("Answer: {}", number * bingo_card.score());
+                    break 'outer;
+                }
             }
         }
+        // Remove bingo cards that have won already
+        bingo_cards = bingo_cards.into_iter().filter(|x| !x.won()).collect();
     }
 }
