@@ -39,7 +39,8 @@ impl BingoCard{
 }
 
 fn main() {
-    let data = fs::read_to_string("input").expect("Can't read file");
+    let args: Vec<String> = env::args().collect();
+    let data = fs::read_to_string(&args[1]).expect("Can't read file");
     let blocks = data.split("\r\n\r\n");
     let numbers: Vec<i32> = blocks.clone()
         .collect::<Vec<&str>>()[0]

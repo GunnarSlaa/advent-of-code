@@ -1,7 +1,8 @@
 use std::fs;
 
 fn main() {
-    let data = fs::read_to_string("input_test").expect("Can't read file");
+    let args: Vec<String> = env::args().collect();
+    let data = fs::read_to_string(&args[1]).expect("Can't read file");
     let lines = data.split("\r\n");
     let mut lines_vec: Vec<&str> = lines.clone().collect();
     let mut lines_count = lines_vec.len();

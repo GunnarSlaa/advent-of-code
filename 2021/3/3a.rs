@@ -1,8 +1,10 @@
 use std::fs;
 use std::convert::TryInto;
+use std::env;
 
 fn main() {
-    let data = fs::read_to_string("input").expect("Can't read file");
+    let args: Vec<String> = env::args().collect();
+    let data = fs::read_to_string(&args[1]).expect("Can't read file");
     let lines = data.split("\r\n");
     let lines_vec: Vec<&str> = lines.clone().collect();
     let lines_count = lines_vec.len();

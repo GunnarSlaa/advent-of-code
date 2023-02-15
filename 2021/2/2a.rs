@@ -25,7 +25,8 @@ struct Instruction {
 }
 
 fn main() {
-    let data = fs::read_to_string("input").expect("Can't read file");
+    let args: Vec<String> = env::args().collect();
+    let data = fs::read_to_string(&args[1]).expect("Can't read file");
     let instruction_list: Vec<Instruction> = data.split("\r\n").map(|x|
         Instruction{
             instruction_type: InstructionType::from_str(x.split(" ").collect::<Vec<&str>>()[0]).unwrap(),
