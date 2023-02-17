@@ -1,6 +1,3 @@
-use std::fs;
-use std::env;
-
 fn round(old: [u64; 9]) -> [u64; 9]{
     let mut new = [0;9];
     new[..8].copy_from_slice(&old[1..]);
@@ -9,20 +6,20 @@ fn round(old: [u64; 9]) -> [u64; 9]{
     return new;
 }
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
-    let data = fs::read_to_string(&args[1]).expect("Can't read file");
-    let numbers: Vec<usize> = data.split(",")
+pub(crate) fn solve(input: &str) -> (String, String){
+    let numbers: Vec<usize> = input.split(",")
         .map(|x| x.parse::<usize>().unwrap_or(0)).collect();
     let mut counts: [u64; 9] = [0; 9];
+    let mut solution: (u64, u64) = (0,0);
     for number in numbers{
         counts[number] += 1;
     }
     for j in 0..256{
         if j == 80{
-            println!("Part1: {}", counts.iter().sum::<u64>());
+            solution.0 = counts.iter().sum::<u64>();
         }
         counts = round(counts);
     }
-    println!("Part2: {}", counts.iter().sum::<u64>());
+    solution.1 = counts.iter().sum::<u64>();
+    (solution.0.to_string(), solution.1.to_string())
 }

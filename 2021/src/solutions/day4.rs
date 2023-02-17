@@ -1,8 +1,5 @@
-use std::fs;
-use std::env;
-
 struct BingoCard{
-    numbers: Vec<i32>,
+    numbers: Vec<u32>,
     hit: [bool; 25],
 }
 
@@ -13,7 +10,7 @@ const WINNING_LINES: [[usize;5];10]= [
     [0,5,10,15,20],[1,6,11,16,21],[2,7,17,22,27],[3,8,13,18,23],[4,9,14,19,24]];
 
 impl BingoCard{
-    fn score(&self) -> i32{
+    fn score(&self) -> u32{
         return self.numbers
             .iter()
             .enumerate()
@@ -21,7 +18,7 @@ impl BingoCard{
             .sum()
     }
 
-    fn hit(&mut self, num: i32) {
+    fn hit(&mut self, num: u32) {
         if !self.numbers.contains(&num) {return;}
         let index = self.numbers.iter().position(|x| x == &num).unwrap();
         self.hit[index] = true;
@@ -39,25 +36,20 @@ impl BingoCard{
     }
 }
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
-    let data = fs::read_to_string(&args[1]).expect("Can't read file");
-    let blocks = data.split("\r\n\r\n");
-    let blocks_count = blocks.clone().collect::<Vec<&str>>().len() - 1;
-    let numbers: Vec<i32> = blocks.clone()
-        .collect::<Vec<&str>>()[0]
+pub(crate) fn solve(input: &str) -> (String, String){
+    let blocks: Vec<&str> = input.split("\r\n\r\n").collect();
+    let blocks_count = blocks.len() - 1;
+    let numbers: Vec<u32> = blocks.clone()[0]
         .split(",")
-        .map(|x| x.parse::<i32>().unwrap_or(0))
+        .map(|x| x.parse::<u32>().unwrap_or(0))
         .collect();
-
     let mut bingo_cards: Vec<BingoCard> = vec![];
-
-    for block in &blocks.clone().collect::<Vec<&str>>()[1..] {
-        let nums: Vec<i32> = block
+    for block in &blocks.clone()[1..] {
+        let nums: Vec<u32> = block
             .split([' ', '\r', '\n'])
             .filter(|x| x != &"")
-            .map(|x| x.parse::<i32>().unwrap_or(0))
-            .collect::<Vec<i32>>();
+            .map(|x| x.parse::<u32>().unwrap_or(0))
+            .collect();
         bingo_cards.push(BingoCard {
             numbers: nums,
             hit: [false; 25],
@@ -65,16 +57,19 @@ fn main() {
     }
 
     let mut count_solved: usize = 0;
+    let mut part1 = 0;
+    let mut part2 = 0;
 
     'outer: for number in numbers {
         for bingo_card in bingo_cards.iter_mut() {
             bingo_card.hit(number);
             if bingo_card.won(){
+                if count_solved == 0 {
+                    part1 = number * bingo_card.score()
+                }
                 count_solved += 1;
                 if count_solved == blocks_count {
-                    println!("Score: {}", bingo_card.score());
-                    println!("Number: {}", number);
-                    println!("Answer: {}", number * bingo_card.score());
+                    part2 = number * bingo_card.score();
                     break 'outer;
                 }
             }
@@ -82,4 +77,5 @@ fn main() {
         // Remove bingo cards that have won already
         bingo_cards = bingo_cards.into_iter().filter(|x| !x.won()).collect();
     }
+    (part1.to_string(), part2.to_string())
 }

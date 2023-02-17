@@ -1,6 +1,4 @@
-use std::fs;
 use std::str::FromStr;
-use std::env;
 
 enum InstructionType {
     Forward,
@@ -25,15 +23,25 @@ struct Instruction {
     amount: i32,
 }
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
-    let data = fs::read_to_string(&args[1]).expect("Can't read file");
-    let instruction_list: Vec<Instruction> = data.split("\r\n").map(|x|
-        Instruction{
-            instruction_type: InstructionType::from_str(x.split(" ").collect::<Vec<&str>>()[0]).unwrap(),
-            amount: x.split(" ").collect::<Vec<&str>>()[1].parse::<i32>().unwrap_or(0),
+pub(crate) fn solve(input: &str) -> (String, String){
+    let instruction_list: Vec<Instruction> = input.split("\r\n")
+        .map(|x|{
+            let instruction_string = x.split(" ").collect::<Vec<&str>>();
+            Instruction {
+                instruction_type: InstructionType::from_str(instruction_string[0]).unwrap(),
+                amount: instruction_string[1].parse::<i32>().unwrap_or(0),
+            }
         }
     ).collect();
+    let mut depth = 0;
+    let mut aim = 0;
+    for instruction in instruction_list.iter(){
+        match instruction.instruction_type {
+            InstructionType::Forward => depth += aim * instruction.amount,
+            InstructionType::Down => aim += instruction.amount,
+            InstructionType::Up => aim -= instruction.amount,
+        }
+    }
     let sum_forward: i32 = instruction_list.iter().map(|x|
         if matches!(x.instruction_type, InstructionType::Forward) {x.amount} else {0i32}
     ).sum();
@@ -43,8 +51,5 @@ fn main() {
     let sum_up: i32 = instruction_list.iter().map(|x|
         if matches!(x.instruction_type, InstructionType::Up) {x.amount} else {0i32}
     ).sum();
-    println!("Forward: {}", sum_forward);
-    println!("Down: {}", sum_down);
-    println!("Up: {}", sum_up);
-    println!("Answer: {}", sum_forward * (sum_down - sum_up));
+    ((sum_forward * (sum_down - sum_up)).to_string(),(sum_forward * depth).to_string())
 }
