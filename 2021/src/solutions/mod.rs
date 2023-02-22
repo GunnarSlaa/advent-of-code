@@ -13,6 +13,6 @@ pub(crate) fn solve(day: u32, input: &str) -> (String, String) {
         4 => day4::solve(input),
         6 => day6::solve(input),
         7 => day7::solve(input),
-        _ => ("Not implemented".to_owned(), "Not implemented".to_owned()),
+        _ => ("Not implemented".to_string(), "Not implemented".to_string()),
     }
 }
