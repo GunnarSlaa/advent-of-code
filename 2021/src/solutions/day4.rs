@@ -1,3 +1,5 @@
+use super::*;
+
 struct BingoCard{
     numbers: Vec<u32>,
     hit: [bool; 25],
@@ -37,12 +39,9 @@ impl BingoCard{
 }
 
 pub(crate) fn solve(input: &str) -> (String, String){
-    let blocks: Vec<&str> = input.split("\r\n\r\n").collect();
+    let blocks = to_blocks(input);
     let blocks_count = blocks.len() - 1;
-    let numbers: Vec<u32> = blocks.clone()[0]
-        .split(",")
-        .map(|x| x.parse::<u32>().unwrap_or(0))
-        .collect();
+    let numbers: Vec<u32> = to_nums::<u32>(blocks[0], ",").unwrap_or(Vec::new());
     let mut bingo_cards: Vec<BingoCard> = vec![];
     for block in &blocks.clone()[1..] {
         let nums: Vec<u32> = block

@@ -1,4 +1,4 @@
-use std::convert::TryInto;
+use super::*;
 
 fn part1(lines: &Vec<&str>) -> u32{
     let lines_count = lines.len();
@@ -53,6 +53,6 @@ fn part2(lines: &Vec<&str>) -> u32 {
 }
 
 pub(crate) fn solve(input: &str) -> (String, String){
-    let lines: Vec<&str> = input.split("\r\n").collect();
+    let lines = to_lines(input);
     (part1(&lines).to_string(), part2(&lines).to_string())
 }

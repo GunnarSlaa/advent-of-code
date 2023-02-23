@@ -1,10 +1,16 @@
+#[allow(unused_imports)]
 mod solutions;
+mod help;
 
 use solutions::*;
+use help::parsing::*;
+
 use std::fs;
+use std::convert::TryInto;
+use std::str::FromStr;
 
 fn main(){
-    let day = 7;
+    let day = 4;
     let test_data = fs::read_to_string(format!("inputs/{}/input_test", day.to_string())).expect("Can't read file");
     let data = fs::read_to_string(format!("inputs/{}/input", day.to_string())).expect("Can't read file");
     let sol_test = solve(day, &test_data);

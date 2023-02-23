@@ -1,3 +1,5 @@
+use super::*;
+
 fn round(old: [u64; 9]) -> [u64; 9]{
     let mut new = [0;9];
     new[..8].copy_from_slice(&old[1..]);
@@ -7,8 +9,7 @@ fn round(old: [u64; 9]) -> [u64; 9]{
 }
 
 pub(crate) fn solve(input: &str) -> (String, String){
-    let numbers: Vec<usize> = input.split(",")
-        .map(|x| x.parse::<usize>().unwrap_or(0)).collect();
+    let numbers: Vec<usize> = to_nums::<usize>(input, ",").unwrap_or(Vec::new());
     let mut counts: [u64; 9] = [0; 9];
     let mut solution: (u64, u64) = (0,0);
     for number in numbers{

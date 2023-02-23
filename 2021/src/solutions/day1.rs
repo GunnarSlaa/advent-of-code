@@ -1,3 +1,5 @@
+use super::*;
+
 fn part1(lines: &Vec<u32>) -> u32{
     let mut previous = &lines[0];
     let mut count = 0;
@@ -22,6 +24,6 @@ fn part2(lines: &Vec<u32>) -> u32{
 }
 
 pub(crate) fn solve(input: &str) -> (String, String){
-    let lines: Vec<u32> = input.clone().split("\r\n").map(|x| x.parse::<u32>().unwrap_or(0)).collect();
+    let lines: Vec<u32> = to_nums::<u32>(input, "\r\n").unwrap_or(Vec::new());
     (part1(&lines).to_string(), part2(&lines).to_string())
 }

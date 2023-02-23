@@ -1,3 +1,5 @@
+use super::*;
+
 fn part1(numbers: &Vec<i32>) -> i32{
     let median: i32 = numbers[numbers.iter().len()/2];
     numbers.iter()
@@ -35,9 +37,7 @@ fn part2(numbers: &Vec<i32>) -> i32 {
 }
 
 pub(crate) fn solve(input: &str) -> (String, String){
-    let mut numbers: Vec<i32> = input.split(",")
-        .map(|x| x.parse::<i32>().unwrap_or(0))
-        .collect();
+    let mut numbers: Vec<i32> = to_nums::<i32>(input, ",").unwrap_or(Vec::new());
     numbers.sort();
     (part1(&numbers).to_string(), part2(&numbers).to_string())
 }
