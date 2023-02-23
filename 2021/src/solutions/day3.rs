@@ -1,6 +1,6 @@
 use super::*;
 
-fn part1(lines: &Vec<&str>) -> u32{
+fn part1(lines: &[&str]) -> u32{
     let lines_count = lines.len();
     let line_size = lines[0].len();
     let mut count_ones = vec![0; line_size];
@@ -30,11 +30,11 @@ fn part2(lines: &Vec<&str>) -> u32 {
             .collect::<Vec<&str>>()
             .len();
         let looking_for = if count * 2 >= lines_count { "1" } else { "0" };
-        lines_vec = lines_vec.into_iter().filter(|x| { &x[column..column + 1] == looking_for }).collect();
+        lines_vec.retain(|x| { &x[column..column + 1] == looking_for });
         lines_count = lines_vec.len();
         if lines_count == 1 { break; }
     }
-    let oxygen_rating = u32::from_str_radix(&lines_vec[0], 2).unwrap();
+    let oxygen_rating = u32::from_str_radix(lines_vec[0], 2).unwrap();
 
     lines_vec = lines.clone();
     lines_count = lines_vec.len();
@@ -44,11 +44,11 @@ fn part2(lines: &Vec<&str>) -> u32 {
             .collect::<Vec<&str>>()
             .len();
         let looking_for = if count * 2 < lines_count { "1" } else { "0" };
-        lines_vec = lines_vec.into_iter().filter(|x| { &x[column..column + 1] == looking_for }).collect();
+        lines_vec.retain(|x| { &x[column..column + 1] == looking_for });
         lines_count = lines_vec.len();
         if lines_count == 1 { break; }
     }
-    let co2_scrubber = u32::from_str_radix(&lines_vec[0], 2).unwrap();
+    let co2_scrubber = u32::from_str_radix(lines_vec[0], 2).unwrap();
     oxygen_rating * co2_scrubber
 }
 

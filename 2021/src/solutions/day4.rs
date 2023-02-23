@@ -34,7 +34,7 @@ impl BingoCard{
                 .filter(|(index, &_x)| winning_line.contains(index))
                 .all(|(_index, &x)| x) {return true;}
         }
-        return false;
+        false
     }
 }
 
@@ -74,7 +74,7 @@ pub(crate) fn solve(input: &str) -> (String, String){
             }
         }
         // Remove bingo cards that have won already
-        bingo_cards = bingo_cards.into_iter().filter(|x| !x.won()).collect();
+        bingo_cards.retain(|x| !x.won());
     }
     (part1.to_string(), part2.to_string())
 }

@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#![allow(dead_code)]
 use std::str::FromStr;
 
 pub(crate) fn to_lines (input: &str) -> Vec<&str>{

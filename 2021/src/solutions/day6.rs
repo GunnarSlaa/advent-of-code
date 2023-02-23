@@ -5,7 +5,7 @@ fn round(old: [u64; 9]) -> [u64; 9]{
     new[..8].copy_from_slice(&old[1..]);
     new[8] = old[0];
     new[6] += old[0];
-    return new;
+    new
 }
 
 pub(crate) fn solve(input: &str) -> (String, String){

@@ -26,7 +26,7 @@ struct Instruction {
 pub(crate) fn solve(input: &str) -> (String, String){
     let instruction_list: Vec<Instruction> = input.split("\r\n")
         .map(|x|{
-            let instruction_string = x.split(" ").collect::<Vec<&str>>();
+            let instruction_string = x.split(' ').collect::<Vec<&str>>();
             Instruction {
                 instruction_type: InstructionType::from_str(instruction_string[0]).unwrap(),
                 amount: instruction_string[1].parse::<i32>().unwrap_or(0),

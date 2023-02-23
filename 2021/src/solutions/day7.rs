@@ -1,13 +1,13 @@
 use super::*;
 
-fn part1(numbers: &Vec<i32>) -> i32{
+fn part1(numbers: &[i32]) -> i32{
     let median: i32 = numbers[numbers.iter().len()/2];
     numbers.iter()
         .map(|x| (median - x).abs())
         .sum()
 }
 
-fn part2(numbers: &Vec<i32>) -> i32 {
+fn part2(numbers: &[i32]) -> i32 {
     let mut from_left:Vec<i32> = Vec::new();
     let mut total_costs_left:Vec<i32> = Vec::new();
     let mut cost = 0;
