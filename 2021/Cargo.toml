@@ -3,3 +3,6 @@ name = "advent-of-code-2021"
 version = "0.1.0"
 authors = ["Gunnar Slaa"]
 description = "2021 Advent of Code solved with Rust"
+
+[dependencies]
+array2d = "0.3.0"
