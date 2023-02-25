@@ -1,4 +1,6 @@
+use std::collections::HashSet;
 use array2d::Array2D;
+use help::generic::highest_n;
 use help::grid::neighbours;
 use help::parsing::to_grid;
 
@@ -20,7 +22,24 @@ fn part1(grid: &Array2D<i32>) -> i32{
 }
 
 fn part2(grid: &Array2D<i32>) -> i32{
-    0
+    let mut sizes: Vec<i32> = Vec::new();
+    for low_point in low_points(grid){
+        let mut set = Vec::new();
+        let mut new_values = vec![low_point];
+        while !new_values.is_empty() {
+            set.extend(new_values.iter());
+            new_values = Vec::new();
+            for point in &set{
+                for nb in neighbours(grid, *point){
+                    if grid[nb] != 9 && !set.contains(&nb) &&!new_values.contains(&nb){
+                        new_values.push(nb)}
+                }
+            }
+        }
+        sizes.push(set.len() as i32);
+    }
+    let highest_3 = highest_n(3, &sizes);
+    highest_3[0] * highest_3[1] * highest_3[2]
 }
 
 pub(crate) fn solve(input: &str) -> (String, String){
