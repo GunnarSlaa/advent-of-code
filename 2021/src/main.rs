@@ -14,9 +14,11 @@ use std::convert::TryInto;
 use std::str::FromStr;
 use array2d::Array2D;
 use std::collections::HashMap;
+use std::collections::HashSet;
+use std::iter::FromIterator;
 
 fn main(){
-    let day = 11;
+    let day = 13;
     let test_data = fs::read_to_string(format!("inputs/{day}/input_test")).expect("Can't read file");
     let data = fs::read_to_string(format!("inputs/{day}/input")).expect("Can't read file");
     let sol_test = solve(day, &test_data);

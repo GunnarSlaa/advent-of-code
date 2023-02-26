@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 pub(crate) fn highest_n(n: usize, v: &Vec<i32>) -> Vec<i32>{
     let mut highest = v.clone();
     highest.sort();
@@ -20,6 +22,34 @@ pub(crate) fn opposite_bracket(c: &char) -> char{
     }
 }
 
+pub(crate) fn is_upper(s: &str) -> bool{
+    s.chars().all(char::is_uppercase)
+}
+
+pub(crate) fn is_lower(s: &str) -> bool{
+    s.chars().all(char::is_lowercase)
+}
+
+pub(crate) fn to_tuple(s: &str) -> (i32, i32){
+    let mut split = s.split(',');
+    (split.next().unwrap().parse::<i32>().unwrap(),
+     split.next().unwrap().parse::<i32>().unwrap())
+}
+
+pub(crate) fn print_grid(dots: HashSet<(i32, i32)>) -> String{
+    let max_x = dots.clone().into_iter().map(|(v,_)|v).fold(0, std::cmp::max);
+    let max_y = dots.clone().into_iter().map(|(_,v)|v).fold(0, std::cmp::max);
+    let mut output = "".to_string();
+    for row in 0..(max_y + 1){
+        output.push('\n');
+        for col in 0..(max_x + 1){
+            output.push_str(if dots.contains(&(col, row)) {"##"} else {"  "});
+        }
+    }
+    output
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -36,5 +66,19 @@ mod tests {
     fn test_opposite_bracket(){
         assert_eq!(opposite_bracket(&'<'), '>');
         assert_eq!(opposite_bracket(&'}'), '{');
+    }
+
+    #[test]
+    fn test_is_upper(){
+        assert!(is_upper("HALLO"));
+        assert!(!is_upper("HALlO"));
+        assert!(!is_upper("HALLO3"));
+    }
+
+    #[test]
+    fn test_is_lower(){
+        assert!(is_lower("hallo"));
+        assert!(!is_lower("halLo"));
+        assert!(!is_lower("hallo3"));
     }
 }
