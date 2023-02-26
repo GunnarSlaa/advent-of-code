@@ -6,6 +6,8 @@ mod day6;
 mod day7;
 mod day8;
 mod day9;
+mod day10;
+mod day11;
 
 use super::*;
 
@@ -19,6 +21,8 @@ pub(crate) fn solve(day: u32, input: &str) -> (String, String) {
         7 => day7::solve(input),
         8 => day8::solve(input),
         9 => day9::solve(input),
+        10 => day10::solve(input),
+        11 => day11::solve(input),
         _ => ("Not implemented".to_string(), "Not implemented".to_string()),
     }
 }

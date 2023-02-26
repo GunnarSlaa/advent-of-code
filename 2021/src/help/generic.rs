@@ -6,6 +6,20 @@ pub(crate) fn highest_n(n: usize, v: &Vec<i32>) -> Vec<i32>{
     highest
 }
 
+pub(crate) fn opposite_bracket(c: &char) -> char{
+    match c{
+        '(' => ')',
+        '[' => ']',
+        '{' => '}',
+        '<' => '>',
+        ')' => '(',
+        ']' => '[',
+        '}' => '{',
+        '>' => '<',
+        _ => 'X'
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -16,5 +30,11 @@ mod tests {
         assert_eq!(highest_n(2, &vec![0, 1, 2, 3, 4]), vec![4, 3]);
         assert_eq!(highest_n(3, &vec![9, 3, 87, 4, 2]), vec![87, 9, 4]);
         assert_eq!(highest_n(4, &vec![1, 3, 5]), vec![5, 3, 1]);
+    }
+
+    #[test]
+    fn test_opposite_bracket(){
+        assert_eq!(opposite_bracket(&'<'), '>');
+        assert_eq!(opposite_bracket(&'}'), '{');
     }
 }
