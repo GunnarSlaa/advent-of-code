@@ -11,7 +11,7 @@ fn part1(lines: &Vec<&str>) -> i32{
     count as i32
 }
 
-fn part2(lines: &Vec<&str>) -> i32{
+fn part2(_lines: &Vec<&str>) -> i32{
     0
 }
 
