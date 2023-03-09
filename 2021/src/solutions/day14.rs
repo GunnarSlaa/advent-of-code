@@ -1,5 +1,3 @@
-use std::hash::Hash;
-use std::ops::Deref;
 use super::*;
 
 fn count_chars(s: String, letters: &[char]) -> Vec<u64>{

@@ -1,16 +1,20 @@
 use array2d::Array2D;
 
 pub(crate) fn neighbours(grid: &Array2D<i32>, (row, col): (usize, usize), diagonal: bool) -> Vec<(usize, usize)>{
+    neighbours_from_size(&(grid.num_rows(), grid.num_columns()), (row, col), diagonal)
+}
+
+pub(crate) fn neighbours_from_size((rows, cols): &(usize, usize), (row, col): (usize, usize), diagonal: bool) -> Vec<(usize, usize)>{
     let mut neighbours = Vec::new();
     if row > 0 {neighbours.push((row - 1, col))}
     if col > 0 {neighbours.push((row, col - 1))}
-    if col < (grid.num_columns() - 1)  {neighbours.push((row, col + 1))}
-    if row < (grid.num_rows() - 1)  {neighbours.push((row + 1, col))}
+    if col < (cols - 1)  {neighbours.push((row, col + 1))}
+    if row < (rows - 1)  {neighbours.push((row + 1, col))}
     if diagonal{
         if row > 0 && col > 0 {neighbours.push((row - 1, col - 1))}
-        if row > 0 && col < (grid.num_columns() - 1) {neighbours.push((row - 1, col + 1))}
-        if row < (grid.num_rows() - 1) && col > 0 {neighbours.push((row + 1, col - 1))}
-        if row < (grid.num_rows() - 1) && col < (grid.num_columns() - 1) {neighbours.push((row + 1, col + 1))}
+        if row > 0 && col < (cols - 1) {neighbours.push((row - 1, col + 1))}
+        if row < (rows - 1) && col > 0 {neighbours.push((row + 1, col - 1))}
+        if row < (rows - 1) && col < (cols - 1) {neighbours.push((row + 1, col + 1))}
     }
     neighbours
 }

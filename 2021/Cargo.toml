@@ -6,3 +6,4 @@ description = "2021 Advent of Code solved with Rust"
 
 [dependencies]
 array2d = "0.3.0"
+pathfinding = "4.2.1"

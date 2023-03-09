@@ -1,4 +1,5 @@
 extern crate array2d;
+extern crate pathfinding;
 
 #[allow(unused_imports)]
 mod solutions;
@@ -17,8 +18,10 @@ use std::collections::HashMap;
 use std::collections::HashSet;
 use std::iter::FromIterator;
 
+use pathfinding::prelude::astar;
+
 fn main(){
-    let day = 14;
+    let day = 15;
     let test_data = fs::read_to_string(format!("inputs/{day}/input_test")).expect("Can't read file");
     let data = fs::read_to_string(format!("inputs/{day}/input")).expect("Can't read file");
     let sol_test = solve(day, &test_data);
