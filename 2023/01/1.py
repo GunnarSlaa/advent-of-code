@@ -1,4 +1,3 @@
-import itertools
 import re
 
 with open("input", "r") as file:
