@@ -71,16 +71,7 @@ for row in range(len(g)):
 g = [["."] * len(g[0])] + g + [["."] * len(g[0])]
 
 #Find all outside parts (BFS)
-frontier = [(0,0)]
-outside = []
-while len(frontier) > 0:
-    new_frontier = set()
-    for loc in frontier:
-        new_frontier.update(neighbour_locations(len(g), len(g[0]), loc[0], loc[1]))
-    new_frontier = [loc for loc in new_frontier if loc not in frontier and loc not in outside]
-    new_frontier = [loc for loc in new_frontier if g[loc[0]][loc[1]] == "."]
-    outside.extend(frontier)
-    frontier = new_frontier
+outside = bfs_find_all(g, (0,0), ".")
 
 for loc in outside:
     g[loc[0]][loc[1]] = "O"

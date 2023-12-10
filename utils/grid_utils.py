@@ -22,3 +22,17 @@ def neighbours(grid, row, col, diagonal=False):
 def print_grid(grid):
     for line in grid:
         print("".join(line))
+
+
+def bfs_find_all(g, start, to_find):
+    frontier = [start]
+    found = []
+    while len(frontier) > 0:
+        new_frontier = set()
+        for loc in frontier:
+            new_frontier.update(neighbour_locations(len(g), len(g[0]), loc[0], loc[1]))
+        new_frontier = [loc for loc in new_frontier if loc not in frontier and loc not in found]
+        new_frontier = [loc for loc in new_frontier if g[loc[0]][loc[1]] in to_find]
+        found.extend(frontier)
+        frontier = new_frontier
+    return found
