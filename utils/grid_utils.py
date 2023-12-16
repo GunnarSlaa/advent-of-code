@@ -3,7 +3,7 @@ def grid_from_lines(input_lines):
 
 
 def in_grid(grid_rows, grid_cols, loc):
-    return 0 <= loc[0] < grid_rows  and 0 <= loc[1] < grid_cols
+    return 0 <= loc[0] < grid_rows and 0 <= loc[1] < grid_cols
 
 
 def neighbour_locations(grid_rows, grid_cols, row, col, diagonal=False):
@@ -36,3 +36,8 @@ def bfs_find_all(g, start, to_find):
         found.extend(frontier)
         frontier = new_frontier
     return found
+
+
+def get_neighbour_dir(g, row, col, dir):
+    locations = [(row - 1, col), (row, col + 1), (row + 1, col), (row, col - 1)]
+    return locations[dir] if in_grid(len(g), len(g[0]), locations[dir]) else None
