@@ -1,14 +1,9 @@
 with open("input", "r") as file:
     lines = file.read().strip().split("\n")
 
-list1 = []
-list2 = []
-for line in lines:
-    list1.append(int(line.split()[0]))
-    list2.append(int(line.split()[1]))
+list1 = sorted([int(line.split()[0]) for line in lines])
+list2 = sorted([int(line.split()[1]) for line in lines])
 
-result = 0
-for i in list1:
-    result += i * list2.count(i)
+result = sum([i * list2.count(i) for i in list1])
 
 print(result)
