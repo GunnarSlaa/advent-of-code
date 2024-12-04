@@ -2,3 +2,5 @@
 venv
 **/[oO]pg*
 .idea
+utils/*.egg-info
+utils/__pycache__

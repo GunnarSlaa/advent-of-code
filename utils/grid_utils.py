@@ -6,6 +6,12 @@ def in_grid(grid_rows, grid_cols, loc):
     return 0 <= loc[0] < grid_rows and 0 <= loc[1] < grid_cols
 
 
+def check_grid(grid, row, col, value):
+    if not in_grid(len(grid), len(grid[0]), (row, col)):
+        return False
+    return grid[row][col] == value
+
+
 def neighbour_locations(grid_rows, grid_cols, row, col, diagonal=False):
     locations = [(row - 1, col), (row, col - 1), (row + 1, col), (row, col + 1)]
     if diagonal:
