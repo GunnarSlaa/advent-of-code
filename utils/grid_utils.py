@@ -47,3 +47,10 @@ def bfs_find_all(g, start, to_find):
 def get_neighbour_dir(g, row, col, dir):
     locations = [(row - 1, col), (row, col + 1), (row + 1, col), (row, col - 1)]
     return locations[dir] if in_grid(len(g), len(g[0]), locations[dir]) else None
+
+
+def find_in_grid(thing, grid):
+   for x, row in enumerate(grid):
+      if thing in row:
+        return (x, row.index(thing))
+      
