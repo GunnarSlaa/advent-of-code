@@ -50,7 +50,14 @@ def get_neighbour_dir(g, row, col, dir):
 
 
 def find_in_grid(thing, grid):
-   for x, row in enumerate(grid):
-      if thing in row:
-        return (x, row.index(thing))
+    for x, row in enumerate(grid):
+        if thing in row:
+            return (x, row.index(thing))
+      
+def find_all_in_grid(thing, grid):
+    found = []
+    for y, row in enumerate(grid):
+        if thing in row:
+            found += [(y, i) for i, x in enumerate(row) if x == thing]
+    return found
       
